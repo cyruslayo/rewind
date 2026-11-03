@@ -8,7 +8,10 @@ Keyboard input controls the box through named actions. The same actions can late
 
 ## Data
 
-To decide: where action values live during a simulation tick; which components the input system reads and writes; keyboard bindings; configuration.
+- **New component:** `InputActions { left: boolean, right: boolean, jump: boolean, rewind: boolean }`. The action values used in a tick live in the world as plain data, so a snapshot can restore them.
+- **Components read:** `InputActions`.
+- **Components written:** `Velocity` for the box; `InputActions` when sampling the keyboard at the start of a tick.
+- **Config values and bindings:** to decide. The keyboard adapter observes physical keys outside the simulation and maps them to actions. It does not own game state.
 
 ## Behaviour
 
