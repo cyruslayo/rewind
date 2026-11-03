@@ -32,7 +32,9 @@ Decided by Layo:
 
 ## Rewind interaction
 
-_To do._
+- `Clock.tick` is a component, so rewind saves and restores it like any other state.
+- The purse (real-time bookkeeping) is not restored by rewind: rewinding the game does not rewind the real world.
+- The simulation must be deterministic: same starting state and same inputs always give the same result. Therefore no simulation code may read the real clock (`Date.now()`, `performance.now()`) or `Math.random`. Only the loop driver touches real time; the simulation only knows "a tick happened".
 
 ## Acceptance tests
 
