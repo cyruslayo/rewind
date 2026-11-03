@@ -45,4 +45,9 @@ Decided by Layo:
 
 ## Out of scope
 
-_To do._
+This spec covers only time: fixed ticks, the purse, the stall cap and interpolated drawing. Not covered (each gets its own spec):
+
+- The ECS and the box entity (components, systems, moving things).
+- Reading input (the `left`, `right`, `jump`, `rewind` actions). The loop only runs the input system as part of a tick.
+- The debug overlay (FPS, tick count, entity count).
+- The rewind system (Phase 2).
