@@ -20,7 +20,17 @@ All game state (the box now; the player, crates and doors later) is stored as pl
 
 ## Behaviour
 
-_TODO (Layo)_
+Systems live in one ordered list and run in that order on every tick. They own no state; they only read and write components.
+
+1. **Clock system:** `Clock.tick += 1`. So during a tick, `Clock.tick` is the number of the tick now running (the first tick is tick 1) and every system in that tick sees the same value.
+2. **Save-previous system:** for every entity with `Position` and `PreviousPosition`, copy `Position` into `PreviousPosition`.
+3. **Movement system:** for every entity with `Position` and `Velocity`, add `dx` to `x` and `dy` to `y`.
+
+Order matters: saving before moving keeps `PreviousPosition` one tick behind `Position`. Moving first would make them equal and kill interpolation.
+
+Rendering is not part of the tick. Each frame it reads `PreviousPosition`, `Position` and the loop's `alpha`, and draws at `previous + (current - previous) * alpha`.
+
+At start-up the box is created with `PreviousPosition` equal to `Position`, so the first frame doesn't streak.
 
 ## Edge cases
 
