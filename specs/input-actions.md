@@ -17,11 +17,14 @@ Keyboard input controls the box through named actions. The same actions can late
 
 Layo's first decision: holding `left` or `right` steers the box. Releasing both stops it. Holding both also stops it; neither direction has priority. The simulation reads named actions, never raw keys. This replaces the box's automatic movement.
 
-To decide: left-edge behaviour, key transitions, focus loss, and how unused `jump` and `rewind` actions behave in Phase 0.
+At the left edge, movement clamps `Position.x` to `0` if it goes negative. This extends the box simulation because the approved ECS spec only needed a right-edge rule. Keep the right-edge overshoot wrap as approved.
+
+To decide: key transitions, focus loss, and how unused `jump` and `rewind` actions behave in Phase 0.
 
 ## Edge cases
 
-To decide.
+- Left motion stops at `x = 0`; the origin is the chosen left boundary, not a rule about every entity's starting position.
+- To decide: focus loss and keyboard conflicts.
 
 ## Rewind interaction
 
