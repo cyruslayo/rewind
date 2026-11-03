@@ -41,7 +41,7 @@ Decided by Layo:
 - [ ] Test: the same inputs give an identical tick count after 10 seconds at 30, 60 and 144 Hz (600 ticks each).
 - [ ] Test: a single 10-second frame runs at most 15 ticks (`maxFrameMs` 250 ÷ 16.67 ms per tick, rounded down).
 - [ ] Test: a frame with a negative elapsed time runs 0 ticks and never makes the purse negative.
-- [ ] Layo's check while playing: _to be written by Layo_
+- [ ] Layo's check while playing: the box moves smoothly, with no visible stuttering or jumping, on both a laptop and a phone (on the deployed link).
 
 ## Out of scope
 
