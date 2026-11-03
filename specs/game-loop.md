@@ -24,7 +24,11 @@ Each frame:
 
 ## Edge cases
 
-_To do (next section)._
+Decided by Layo:
+
+- **Hidden tab / long stall:** elapsed time per frame is capped at `maxFrameMs`. After a long absence the game continues as if only that much time passed (the tab acts as an automatic pause).
+- **Zero or negative frame time:** treated as 0. The purse never goes below zero, and no ticks are bought on that frame.
+- **Tick rate:** 60 ticks per second (`ticksPerSecond = 60`). Good for precision controls and phone memory; re-check with measurements in Phase 2.
 
 ## Rewind interaction
 
