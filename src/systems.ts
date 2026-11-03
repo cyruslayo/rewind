@@ -14,7 +14,7 @@ export function savePrevious(world: World): void {
     if (!world.entities.has(id)) continue;
     const previous = world.components.previousPosition.get(id);
     if (previous) {
-      previous.x = position.x + 1;
+      previous.x = position.x;
       previous.y = position.y;
     }
   }
