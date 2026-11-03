@@ -16,7 +16,7 @@ All game state (the box now; the player, crates and doors later) is stored as pl
   - `PreviousPosition { x, y }`: where it was after the tick before. A component, not renderer memory, so rewind restores it and the renderer never keeps hidden state.
   - `Velocity { dx, dy }`: change in position per tick. State, because it will change over time (gravity in Phase 1).
   - `Clock { tick }`: already built.
-- **Config values:** starting box speed (pixels per tick). It is only the value the box is created with; afterwards the speed lives in `Velocity`.
+- **Config values:** `worldWidth`, and starting box speed (pixels per tick). The speed is only the value the box is created with; afterwards the speed lives in `Velocity`.
 
 ## Behaviour
 
@@ -25,6 +25,7 @@ Systems live in one ordered list and run in that order on every tick. They own n
 1. **Clock system:** `Clock.tick += 1`. So during a tick, `Clock.tick` is the number of the tick now running (the first tick is tick 1) and every system in that tick sees the same value.
 2. **Save-previous system:** for every entity with `Position` and `PreviousPosition`, copy `Position` into `PreviousPosition`.
 3. **Movement system:** for every entity with `Position` and `Velocity`, add `dx` to `x` and `dy` to `y`.
+4. **Wrap system:** see Edge cases.
 
 Order matters: saving before moving keeps `PreviousPosition` one tick behind `Position`. Moving first would make them equal and kill interpolation.
 
@@ -34,7 +35,14 @@ At start-up the box is created with `PreviousPosition` equal to `Position`, so t
 
 ## Edge cases
 
-_TODO (Layo)_
+Decided by Layo:
+
+- **Leaving the world:** the simulation owns the wrap, not the renderer. A `worldWidth` value lives in the config file. A **Wrap system** runs after Movement: for every entity with `Position` and `PreviousPosition`, if `x >= worldWidth`, set `x = x - worldWidth` and set `PreviousPosition.x` to the same value. Resetting `PreviousPosition` stops interpolation drawing a streak across the screen for one frame. (Only the right edge is needed for now, since the box only moves right.)
+- The wrap rule is a draft call by Claude (keep the overshoot rather than snap to 0); Layo to confirm or change.
+
+Other rules:
+
+- An entity missing a component a system needs is skipped by that system. It is not an error.
 
 ## Rewind interaction
 
