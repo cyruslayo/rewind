@@ -46,7 +46,11 @@ Other rules:
 
 ## Rewind interaction
 
-_TODO (Layo)_
+- A snapshot must hold, for the whole world: the **values of every component**, **which entities exist**, and the **next-entity-ID counter**. So an entity destroyed after the snapshot comes back, one created after it disappears, and the next new entity gets the same ID it got the first time.
+- The ECS therefore keeps the entity set and the ID counter as plain data it can export and restore, and it keeps no state anywhere else. Systems are stateless.
+- `TimeImmune` is not needed yet. The Rewind system (Phase 2) will skip entities with that tag; nothing in this spec prevents it.
+- Not restored by rewind: the purse and anything else that measures real time (see game-loop spec).
+- The Phase 2 rewind system is not built here, but the world must be exportable and restorable as plain data so it can be.
 
 ## Acceptance tests
 
