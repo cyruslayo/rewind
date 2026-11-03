@@ -15,9 +15,9 @@ Keyboard input controls the box through named actions. The same actions can late
 
 ## Behaviour
 
-Layo's first decision: holding `left` or `right` steers the box. Releasing both stops it. The simulation reads named actions, never raw keys. This replaces the box's automatic movement.
+Layo's first decision: holding `left` or `right` steers the box. Releasing both stops it. Holding both also stops it; neither direction has priority. The simulation reads named actions, never raw keys. This replaces the box's automatic movement.
 
-To decide: simultaneous directions, key transitions, focus loss, and how unused `jump` and `rewind` actions behave in Phase 0.
+To decide: left-edge behaviour, key transitions, focus loss, and how unused `jump` and `rewind` actions behave in Phase 0.
 
 ## Edge cases
 
