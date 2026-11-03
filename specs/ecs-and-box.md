@@ -1,6 +1,6 @@
 # Spec: ECS and box
 
-**Phase:** Phase 0 · **Status:** approved by Layo (2026-11-03) · **Owner:** agent
+**Phase:** Phase 0 · **Status:** built and signed off by Layo (2026-11-03; smooth on laptop and phone, no wrap streak) · **Owner:** agent
 
 ## Purpose
 
@@ -38,7 +38,7 @@ At start-up the box is created with `PreviousPosition` equal to `Position`, so t
 Decided by Layo:
 
 - **Leaving the world:** the simulation owns the wrap, not the renderer. A `worldWidth` value lives in the config file. A **Wrap system** runs after Movement: for every entity with `Position` and `PreviousPosition`, if `x >= worldWidth`, set `x = x - worldWidth` and set `PreviousPosition.x` to the same value. Resetting `PreviousPosition` stops interpolation drawing a streak across the screen for one frame. (Only the right edge is needed for now, since the box only moves right.)
-- The wrap rule is a draft call by Claude (keep the overshoot rather than snap to 0); Layo to confirm or change.
+- Layo confirmed the wrap keeps the overshoot.
 
 Other rules:
 
@@ -54,12 +54,12 @@ Other rules:
 
 ## Acceptance tests
 
-- [ ] Test: after 10 simulated seconds (600 ticks) driven through the loop at 30, 60 and 144 Hz, the **entire world** is identical: every component of every entity, the entity set and `Clock.tick`. (Comparing only `Position.x` would miss a wrong `PreviousPosition`.)
-- [ ] Test: one tick on a box with `Position.x = 100`, `Velocity.dx = 4` leaves `PreviousPosition.x = 100` and `Position.x = 104` (save-previous runs before movement).
-- [ ] Test: when `Position.x` reaches `worldWidth`, the Wrap system sets `Position.x = x - worldWidth` and `PreviousPosition.x` to the same value.
-- [ ] Test: an entity with `Position` but no `Velocity` is not moved and causes no error.
-- [ ] Test: export the world, run some ticks (creating and destroying an entity along the way), restore the export: all component values, the entity set and the next-ID counter equal the export.
-- [ ] Layo's check while playing: the box moves smoothly and wraps at the edge with no streak across the screen, on both a laptop and a phone (deployed link).
+- [x] Test: after 10 simulated seconds (600 ticks) driven through the loop at 30, 60 and 144 Hz, the **entire world** is identical: every component of every entity, the entity set and `Clock.tick`. (Comparing only `Position.x` would miss a wrong `PreviousPosition`.)
+- [x] Test: one tick on a box with `Position.x = 100`, `Velocity.dx = 4` leaves `PreviousPosition.x = 100` and `Position.x = 104` (save-previous runs before movement).
+- [x] Test: when `Position.x` reaches `worldWidth`, the Wrap system sets `Position.x = x - worldWidth` and `PreviousPosition.x` to the same value.
+- [x] Test: an entity with `Position` but no `Velocity` is not moved and causes no error.
+- [x] Test: export the world, run some ticks (creating and destroying an entity along the way), restore the export: all component values, the entity set and the next-ID counter equal the export.
+- [x] Layo's check while playing: the box moves smoothly and wraps at the edge with no streak across the screen, on both a laptop and a phone (deployed link).
 
 ## Out of scope
 
