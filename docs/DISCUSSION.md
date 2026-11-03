@@ -43,6 +43,21 @@ A good starting design: save only relevant state, only when it changes, plus per
 - Project doc in Claude: "Rewind: Game Design & Agent Orchestration Curriculum" — https://claude.ai/artifact/JhwzHD3F3T8PZpsWx1Lu9K (copied here as `CURRICULUM.md`).
 - Layo then moved to Claude Code to start Phase 0.
 
+## Plan refinement (2026-11-03, Claude Code)
+
+Layo asked Claude to refine the plan. Layo's inputs: phases may be reordered; about 3-5 hours a week; launch on desktop **and** mobile touch.
+
+Changes and why:
+- **ECS from Phase 0** (was Phase 2). Writing the loop and movement outside components and moving them later means a rewrite, and rewind depends on all state being in components.
+- **Rewind prototype moved to Phase 2** (was Phase 3). It is the riskiest and most important part, so we test it before investing in levels. It starts as the simplest correct version (a full snapshot per tick); delta storage comes only if measurements demand it.
+- **Measurable exit criteria.** Each one is now an automated test or a clear yes/no (e.g. identical positions at 30/60/144 Hz; rewind hash matches at every tick).
+- **The old Phase 4 was split** into "Time-immune & mechanics" and "World 1 + touch & gamepad".
+- **LDtk instead of a home-made level editor**, and every level gets a solution replay that CI runs, to catch agent regressions.
+- **Added**: input as actions (needed for touch and gamepad), choosing internal resolution, debug overlay and tweak panel, CI and deploy from Phase 0, git and diff reading as a foreman skill, templates for specs, reviews and playtests, and a session shape.
+- **v1.0 = World 1**; World 2 becomes a post-launch update, so the first release lands in roughly 7-9 months at 3-5 h/week instead of much later.
+- **Capstone phase**: Layo plans a different game alone, which tests the end goal directly.
+- Risks and a cut order (World 2 → enemies → gamepad) were written down.
+
 ## Sources
 
 - PixiJS v8 launch — https://pixijs.com/blog/pixi-v8-launches

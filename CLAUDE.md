@@ -16,13 +16,18 @@ The end goal is that Layo can plan any game and direct agents to build it.
 - Core mechanic from **Braid**: the player can rewind time; some objects are immune to rewind.
 - Movement feel from **Celeste**: coyote time, input buffering, variable jump height, tight controls.
 - Later worlds each add a new twist on time, as Braid's worlds do.
-- Puzzle design is taught in **every** phase, not just phase 4 (Layo designs levels on paper early, even before the mechanic exists).
+- Puzzle design is taught in **every** phase (Layo designs levels on paper early, even before the mechanic exists).
+- Platforms: desktop browsers (keyboard + gamepad) and mobile browsers (on-screen touch controls).
+- v1.0 = World 1 (8 levels). World 2 ships later as an update.
+- Layo has ~3-5 hours a week; keep sessions to ~2 hours and phases small.
 
 ## Stack
 
 - TypeScript (strict) + Vite + PixiJS v8 (WebGPU with WebGL fallback)
-- Our own small ECS (~150 lines) — all game state as plain component data. Only switch to bitECS if we outgrow it.
-- Vitest for tests, especially tests proving rewind restores state exactly.
+- Our own small ECS (~150 lines), present from Phase 0. All game state is plain component data. Only switch to bitECS if we outgrow it.
+- Vitest for tests, especially tests proving rewind restores state exactly and level solution replays.
+- LDtk for level editing (we load its JSON; no home-made editor).
+- GitHub Actions: typecheck + tests on every push; auto-deploy a playable preview.
 - Deploy to itch.io.
 
 ## Architecture rules
@@ -32,11 +37,17 @@ The end goal is that Layo can plan any game and direct agents to build it.
 - Systems are small and independently testable: Input, Physics, Collision, Rewind, Render, etc. Each gets a one-page spec in `specs/` before an agent builds it.
 - Rewind-immune objects use a `TimeImmune` tag component that the Rewind system skips.
 - Feel parameters (jump height, gravity, coyote frames, buffer frames) live in one tweakable config file.
+- Input is read through **actions** (`left`, `right`, `jump`, `rewind`), never raw keys, so keyboard, gamepad and touch share one path.
+- No `Math.random`, `Date.now()` or `performance.now()` inside the simulation. Use a seeded RNG whose state is a component.
+- Positions are integers with sub-pixel remainders (Celeste/TowerFall style).
+- Rewind starts as a full snapshot per tick; switch to delta storage only if measured memory demands it.
+- Levels are LDtk data, and each level ships a recorded solution replay that CI checks.
+- Review every agent diff with `docs/templates/review-checklist.md`; every bug fix gets a regression test.
 
 ## How we work
 
-1. Each phase in `docs/CURRICULUM.md` has a design lesson, a puzzle lesson, a build, a foreman skill and exit criteria.
-2. Teach the lesson briefly, then have Layo write or approve a spec in `specs/`.
+1. Each phase in `docs/CURRICULUM.md` has a design lesson, a puzzle lesson, a build, a foreman skill, measurable exit criteria and an estimate. Follow the session shape described there.
+2. Teach the lesson briefly, then have Layo write or approve a spec in `specs/` (start from `specs/_TEMPLATE.md`).
 3. Break the spec into tasks; delegate to subagents where it helps; review their output against the spec and tests.
 4. Layo plays the build and signs off on exit criteria.
 5. **Update the progress log** at the bottom of `docs/CURRICULUM.md` at the end of every session.
@@ -45,4 +56,4 @@ Keep Layo engaged: explain *why*, ask Layo to make design calls, and show how to
 
 ## Current status
 
-Planning done (2026-11-03). **Next: Phase 0 — The loop** (project setup, fixed-timestep loop, a box on screen; Layo writes the first spec; Layo plays Braid World 2 and notes what each puzzle teaches).
+Planning done and refined (2026-11-03). **Next: Phase 0 — Loop & skeleton**: project setup, minimal ECS, fixed-timestep loop with a box entity, input actions, debug overlay, CI and an auto-deployed preview playable on laptop and phone. Layo writes the first spec and learns git basics, and plays Braid World 2, noting what each puzzle teaches.
