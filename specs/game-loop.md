@@ -1,6 +1,6 @@
 # Spec: Game loop
 
-**Phase:** Phase 0 · **Status:** draft (Layo is writing it section by section) · **Owner:** agent
+**Phase:** Phase 0 · **Status:** approved by Layo (2026-11-03) · **Owner:** agent
 
 ## Purpose
 

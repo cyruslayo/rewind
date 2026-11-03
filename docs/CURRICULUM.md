@@ -251,3 +251,4 @@ These are estimates; we re-check them at the end of each phase and log the actua
 | --- | --- | --- | --- |
 | 2026-11-03 | Planning | Chose rewind game, stack and curriculum | Start Phase 0 |
 | 2026-11-03 | Planning | Plan refined: ECS from Phase 0, rewind moved to Phase 2, measurable exits, LDtk, CI/deploy, touch + gamepad, v1.0 = World 1, estimates at 3-5 h/week | Start Phase 0 |
+| 2026-11-03 | 0 | Walking skeleton (Vite + TS + Pixi) live on GitHub Pages with CI. Loop lesson (fixed timestep, accumulator/purse, interpolation, stall cap) taught with a coins analogy and a loop visualizer page. `feed` (purse) built with 6 tests. Layo wrote and approved `specs/game-loop.md` section by section. Layo's pace: needs one question at a time, concrete examples before abstractions. | Build the loop driver + `Clock` component against the spec; then ECS/box spec; Layo to play Braid World 2 and note each puzzle's lesson |
