@@ -54,8 +54,18 @@ Other rules:
 
 ## Acceptance tests
 
-_TODO (Layo)_
+- [ ] Test: after 10 simulated seconds (600 ticks) driven through the loop at 30, 60 and 144 Hz, the **entire world** is identical: every component of every entity, the entity set and `Clock.tick`. (Comparing only `Position.x` would miss a wrong `PreviousPosition`.)
+- [ ] Test: one tick on a box with `Position.x = 100`, `Velocity.dx = 4` leaves `PreviousPosition.x = 100` and `Position.x = 104` (save-previous runs before movement).
+- [ ] Test: when `Position.x` reaches `worldWidth`, the Wrap system sets `Position.x = x - worldWidth` and `PreviousPosition.x` to the same value.
+- [ ] Test: an entity with `Position` but no `Velocity` is not moved and causes no error.
+- [ ] Test: export the world, run some ticks (creating and destroying an entity along the way), restore the export: all component values, the entity set and the next-ID counter equal the export.
+- [ ] Layo's check while playing: the box moves smoothly and wraps at the edge with no streak across the screen, on both a laptop and a phone (deployed link).
 
 ## Out of scope
 
-_TODO (Layo)_
+- Reading input (`left`, `right`, `jump`, `rewind`) and the input system.
+- The debug overlay (FPS, tick count, entity count).
+- The rewind system itself (Phase 2); this spec only keeps the world exportable and restorable.
+- Collision and tile grids, gravity, jumping (Phase 1).
+- Integer positions with sub-pixel remainders (Phase 1; the box may use plain numbers for now).
+- Concrete numbers for `worldWidth` and starting speed: the agent picks sensible defaults in the config file and Layo tunes them by playing.
