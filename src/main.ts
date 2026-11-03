@@ -1,45 +1,43 @@
 import { Application, Graphics } from 'pixi.js';
-import type { Clock } from './components';
+import { config } from './config';
 import { startLoop } from './loopDriver';
+import { interpolatePosition } from './renderSystem';
+import { runTick } from './systems';
+import { World } from './world';
 
-// TEMPORARY: replaced by the ECS + box spec.
-// Throwaway demo: plain-object state, one box that wraps across the screen.
+const world = new World();
+const clock = world.createEntity();
+world.components.clock.set(clock, { tick: 0 });
 
-/** Box speed in pixels per tick. */
-const BOX_SPEED_PX_PER_TICK = 4;
-const BOX_SIZE = 40;
-
-const state = {
-  clock: { tick: 0 } as Clock,
-  prevX: 0,
-  x: 0,
-};
+const boxEntity = world.createEntity();
+const initialPosition = { x: 0, y: 0 };
+world.components.position.set(boxEntity, { ...initialPosition });
+world.components.previousPosition.set(boxEntity, { ...initialPosition });
+world.components.velocity.set(boxEntity, { dx: config.startingBoxSpeedPxPerTick, dy: 0 });
 
 const app = new Application();
 await app.init({ resizeTo: window, background: '#1a1a2e', antialias: true });
 document.body.appendChild(app.canvas);
 
-const box = new Graphics().rect(-BOX_SIZE / 2, -BOX_SIZE / 2, BOX_SIZE, BOX_SIZE).fill('#f4a261');
+const box = new Graphics()
+  .rect(-config.boxSize / 2, -config.boxSize / 2, config.boxSize, config.boxSize)
+  .fill('#f4a261');
 app.stage.addChild(box);
 
-// Pixi's own ticker would draw on its own schedule; our loop driver draws instead.
+// Pixi's ticker would draw independently; the loop driver draws once per frame.
 app.ticker.stop();
 
-function onTick(): void {
-  state.prevX = state.x;
-  state.x += BOX_SPEED_PX_PER_TICK;
-  if (state.x > app.screen.width + BOX_SIZE) {
-    // Wrap: move both so interpolation does not smear across the screen.
-    state.x = -BOX_SIZE;
-    state.prevX = -BOX_SIZE;
-  }
-  state.clock.tick += 1;
-}
-
-function onRender(alpha: number): void {
-  box.x = state.prevX + (state.x - state.prevX) * alpha;
-  box.y = app.screen.height / 2;
-  app.render();
-}
-
-startLoop({ onTick, onRender });
+startLoop({
+  onTick: () => runTick(world),
+  onRender: (alpha) => {
+    const position = interpolatePosition(world, boxEntity, alpha);
+    if (position) {
+      // Scale the logical world to the screen width, including on narrow phones.
+      const scale = app.screen.width / config.worldWidth;
+      box.scale.set(scale);
+      box.x = position.x * scale;
+      box.y = app.screen.height / 2 + position.y * scale;
+    }
+    app.render();
+  },
+});
