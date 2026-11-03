@@ -5,6 +5,12 @@ export const config = {
   ticksPerSecond: 60,
   /** Longest real time (ms) one frame may add to the purse; longer stalls are capped. */
   maxFrameMs: 250,
+  /** Logical width of the box world, independent of screen pixel width. */
+  worldWidth: 320,
+  /** Initial horizontal velocity in logical pixels per tick. */
+  startingBoxSpeedPxPerTick: 2,
+  /** Visual side length of the demo box in logical pixels. */
+  boxSize: 32,
 } as const;
 
 /**
