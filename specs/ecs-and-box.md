@@ -1,6 +1,6 @@
 # Spec: ECS and box
 
-**Phase:** Phase 0 · **Status:** draft (Layo writing section by section) · **Owner:** agent
+**Phase:** Phase 0 · **Status:** approved by Layo (2026-11-03) · **Owner:** agent
 
 ## Purpose
 

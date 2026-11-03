@@ -65,4 +65,4 @@ Keep Layo engaged: explain *why*, ask Layo to make design calls, and show how to
 
 ## Current status
 
-Planning done and refined (2026-11-03). **Next: Phase 0 — Loop & skeleton**: project setup, minimal ECS, fixed-timestep loop with a box entity, input actions, debug overlay, CI and an auto-deployed preview playable on laptop and phone. Layo writes the first spec and learns git basics, and plays Braid World 2, noting what each puzzle teaches.
+Phase 0 in progress (2026-11-03). Done: walking skeleton, CI + Pages deploy, game loop (`specs/game-loop.md` built and signed off), ECS + box spec approved (`specs/ecs-and-box.md`, not yet built). **Next:** break the ECS spec into agent tasks and build them (replacing the temporary demo state in `src/main.ts`), then the input-actions spec, debug overlay spec, and the Phase 0 exit criteria. Layo also plays Braid World 2, noting what each puzzle teaches.
