@@ -11,7 +11,8 @@ Keyboard input controls the box through named actions. The same actions can late
 - **New component:** `InputActions { left: boolean, right: boolean, jump: boolean, rewind: boolean }`. The action values used in a tick live in the world as plain data, so a snapshot can restore them.
 - **Components read:** `InputActions`.
 - **Components written:** `Velocity` for the box; `InputActions` when sampling the keyboard at the start of a tick.
-- **Config values and bindings:** to decide. The keyboard adapter observes physical keys outside the simulation and maps them to actions. It does not own game state.
+- **Keyboard bindings:** `ArrowLeft` and `KeyA` map to `left`; `ArrowRight` and `KeyD` map to `right`. The keyboard adapter observes physical keys outside the simulation and maps them to actions. It does not own game state.
+- **Config values:** movement speed already lives in config and is the starting box speed. Other action bindings are to decide.
 
 ## Behaviour
 
@@ -19,7 +20,7 @@ Layo's first decision: holding `left` or `right` steers the box. Releasing both 
 
 At the left edge, movement clamps `Position.x` to `0` if it goes negative. This extends the box simulation because the approved ECS spec only needed a right-edge rule. Keep the right-edge overshoot wrap as approved.
 
-To decide: keyboard bindings, key transitions, and how unused `jump` and `rewind` actions behave in Phase 0.
+To decide: key transitions when multiple keys map to one action, and how unused `jump` and `rewind` actions behave in Phase 0.
 
 ## Edge cases
 
