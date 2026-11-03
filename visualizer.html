@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Rewind - Loop Visualizer</title>
+    <style>
+      :root { color-scheme: dark; --bg:#1a1a2e; --panel:#232342; --ink:#e8e8f0; --dim:#9a9ab8; --coin:#f4a261; --tick:#2a9d8f; --line:#3a3a60; }
+      * { box-sizing: border-box; }
+      body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.45 system-ui,sans-serif; padding:16px; max-width:760px; margin-inline:auto; }
+      h1 { font-size:20px; margin:0 0 4px; } p.sub { color:var(--dim); margin:0 0 14px; }
+      .controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:14px; }
+      button, select { background:var(--panel); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:8px 12px; font:inherit; min-height:40px; }
+      button.primary { background:var(--tick); border-color:var(--tick); color:#06201c; font-weight:600; }
+      label.chk { display:flex; gap:6px; align-items:center; color:var(--dim); }
+      .lane { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:12px; }
+      .lane h2 { font-size:15px; margin:0 0 8px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+      .lane h2 span { color:var(--dim); font-weight:400; }
+      .purse { display:grid; grid-template-columns:repeat(12,1fr); gap:3px; margin-bottom:6px; }
+      .cell { height:16px; border-radius:3px; background:#15152b; border:1px solid var(--line); }
+      .cell.on { background:var(--coin); border-color:var(--coin); }
+      .cell.flash { background:var(--tick); border-color:var(--tick); }
+      .say { color:var(--dim); font-size:13px; min-height:20px; margin-bottom:8px; font-variant-numeric:tabular-nums; }
+      .track { position:relative; height:26px; background:#15152b; border-radius:6px; border:1px solid var(--line); }
+      .box { position:absolute; top:2px; width:20px; height:20px; background:var(--coin); border-radius:3px; margin-left:-10px; }
+      .box.sim { background:transparent; border:2px dashed var(--dim); top:2px; }
+      .stats { display:flex; justify-content:space-between; color:var(--dim); font-size:13px; margin-top:6px; font-variant-numeric:tabular-nums; }
+      .result { display:none; background:#16342f; border:1px solid var(--tick); border-radius:10px; padding:12px; }
+      .result.show { display:block; }
+      .legend { color:var(--dim); font-size:13px; margin:14px 0 0; }
+    </style>
+  </head>
+  <body>
+    <h1>Loop visualizer</h1>
+    <p class="sub">Three screens, same game. The purse (orange cells) holds time owed. 12 cells = 1 tick (teal flash = a tick was bought).</p>
+    <div class="controls">
+      <button id="play" class="primary">Play</button>
+      <button id="step">Next frame</button>
+      <button id="reset">Reset</button>
+      <select id="speed" aria-label="Speed">
+        <option value="720">Real time</option>
+        <option value="180" selected>Slow (1/4)</option>
+        <option value="72">Slower (1/10)</option>
+        <option value="24">Crawl (1/30)</option>
+      </select>
+      <label class="chk"><input type="checkbox" id="interp" /> interpolation</label>
+    </div>
+    <div id="lanes"></div>
+    <div id="result" class="result"></div>
+    <p class="legend">Dashed outline = where the simulation says the box is. Solid box = where we draw it. With interpolation off they match; with it on, the drawn box blends between the previous and current tick.</p>
+    <script type="module" src="/src/visualizer.ts"></script>
+  </body>
+</html>
