@@ -20,13 +20,16 @@ Layo's first decision: holding `left` or `right` steers the box. Releasing both 
 
 At the left edge, movement clamps `Position.x` to `0` if it goes negative. This extends the box simulation because the approved ECS spec only needed a right-edge rule. Keep the right-edge overshoot wrap as approved.
 
-To decide: key transitions when multiple keys map to one action, and how unused `jump` and `rewind` actions behave in Phase 0.
+An action stays true while at least one of its mapped keys is held. Releasing `KeyD` does not clear `right` while `ArrowRight` remains held.
+
+To decide: how `jump` and `rewind` actions behave before their mechanics exist.
 
 ## Edge cases
 
 - Left motion stops at `x = 0`; the origin is the chosen left boundary, not a rule about every entity's starting position.
 - On focus loss, the keyboard adapter clears all held actions. The next tick samples false values and stops the box. A missed key-release event cannot leave movement stuck.
-- To decide: keyboard conflicts.
+- Multiple keys can map to the same action. Releasing one does not clear the action while another remains held.
+- To decide: other keyboard conflicts.
 
 ## Rewind interaction
 
