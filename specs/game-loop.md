@@ -1,6 +1,6 @@
 # Spec: Game loop
 
-**Phase:** Phase 0 · **Status:** approved by Layo (2026-11-03) · **Owner:** agent
+**Phase:** Phase 0 · **Status:** built and signed off by Layo (2026-11-03, smooth on laptop and phone) · **Owner:** agent
 
 ## Purpose
 
