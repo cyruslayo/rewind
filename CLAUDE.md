@@ -54,6 +54,15 @@ The end goal is that Layo can plan any game and direct agents to build it.
 
 Keep Layo engaged: explain *why*, ask Layo to make design calls, and show how to spot when an agent's work is wrong.
 
+## How to teach Layo (learned in Phase 0)
+
+- Layo is a software engineer but new to game development and game design. Don't water things down: explain the concept and the abstraction before any math or jargon.
+- Go **one question at a time**. Show a finished worked example first, then ask a single question with 2-3 choices and ask for Layo's reasoning. Correct plainly when wrong and explain the slip; "I don't know" is a valid answer and tells you what to re-teach.
+- Use concrete whole-number examples. Shared analogies: the **purse of coins** (time owed; a tick costs 12 coins, 1 coin = 1/720 s) and the **diary** (a frame is a glance at the wall clock, a tick is a fixed-size diary entry, the cap limits how much you catch up at once).
+- Keep **tick** (a fixed step of game time) and **frame** (a screen redraw) clearly separate; they were mixed up before. Introduce new terms (e.g. refresh rate) before using them.
+- Write specs section by section from `specs/_TEMPLATE.md`, with Layo making each decision; assemble the answers into the file and have Layo approve it.
+- Commit and push often (a hook checks for uncommitted changes). Develop on the branch named in the session instructions so the Pages deploy keeps working.
+
 ## Current status
 
 Planning done and refined (2026-11-03). **Next: Phase 0 — Loop & skeleton**: project setup, minimal ECS, fixed-timestep loop with a box entity, input actions, debug overlay, CI and an auto-deployed preview playable on laptop and phone. Layo writes the first spec and learns git basics, and plays Braid World 2, noting what each puzzle teaches.
